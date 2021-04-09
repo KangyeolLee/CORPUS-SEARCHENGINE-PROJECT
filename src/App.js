@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, Container, Typography } from "@material-ui/core";
+import "./app.css";
+import OptionSettingBar from "./components/OptionSettingBar";
+import Result from "./components/Result";
+import TextInput from "./components/TextInput";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxWidth="md">
+      <Box my={10}>
+        <Typography align="center" variant="h3" component="h1">
+          Corpus Search Engine
+        </Typography>
+      </Box>
+
+      <OptionSettingBar />
+      <Result />
+      <TextInput />
+    </Container>
   );
 }
 
