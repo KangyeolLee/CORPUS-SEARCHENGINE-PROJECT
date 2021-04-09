@@ -2,69 +2,35 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Corpus Search Engine Project
 
-In the project directory, you can run:
+코퍼스(Corpus)란?
 
-### `npm start`
+- 언어학에서 코퍼스 또는 텍스트 코퍼스는 크고 구조화 된 텍스트 집합으로 구성된 언어 리소스로,
+  통계 분석 및 가설 테스트, 특정 언어 영역 내에서 발생을 확인하거나 언어 규칙을 검증하는데 사용
+  (출처: [위키백과](https://en.wikipedia.org/wiki/Text_corpus))
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+간단한 텍스트 파일을 대상으로, 사용자가 원하는 옵션으로 텍스트 코퍼스를 검색할 수 있는 웹 사이트
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+- React CRA 환경으로 Frontend 구성
+- Redux Toolkit으로 전역 상태 관리
+- Material UI 사용
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 필수기능
 
-### `npm run build`
+1. 검색하고자 하는 단어 입력 (전치사 + 명사의 전명구 단위도 입력 가능)
+2. 검색 단어 기준으로 입력된 범위 내에 존재하는 단어들 모두 검색
+3. 검색된 단어를 등장 빈도 수와 해당 단어가 등장한 범위를 테이블 형태로 출력
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Update 내역
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 04.09 Update
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. 검색할 단어 비교 시 기존 100% 일치에서 포함여부로 로직 변경
 
-### `npm run eject`
+- 기존 : impfstoff 단어 검색 시 impfstoffe / impfstoffes / -impfstoff 등은 검색 불가
+- 변경 : impfstoff 가 포함된 모든 단어 검색 가능
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+2. 1번과 관련해 상관관계가 적은 단어 목록은 사용자가 직접 제거할 수 있는 기능 추가
