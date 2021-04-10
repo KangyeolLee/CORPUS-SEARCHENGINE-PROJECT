@@ -6,11 +6,6 @@ import {
   Divider,
   Grid,
   IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -20,21 +15,62 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import React, { useEffect, useState } from "react";
+import TableForm from "./TableForm";
 
 const Result = () => {
-  const searchWords = useSelector((state) => state.searchResult.searchWords);
+  const sentences = useSelector((state) => state.searchResult.aroundWords);
+  const { word, text, range } = useSelector(
+    (state) => state.searchResult.searchWords
+  );
   const [wordsArr, setWordsArr] = useState("");
   const [sum, setSum] = useState(0);
 
   useEffect(() => {
-    const initialWordsArr = Object.entries(searchWords);
-    const initialSum = Object.values(searchWords).reduce(
-      (a, b) => a + b.sum,
-      0
-    );
+    const initialWordsArr = text ? Object.entries(text) : "";
+    const initialSum = text
+      ? Object.values(text).reduce((a, b) => a + b.sum, 0)
+      : 0;
     setWordsArr(initialWordsArr);
     setSum(initialSum);
-  }, [searchWords]);
+  }, [text]);
+
+  const wordsInPrev = {};
+  const wordsInNext = {};
+
+  for (const sentence of sentences) {
+    const splitedSentence = sentence.split(" ").filter(String);
+    const indexes = splitedSentence.reduce((acc, cur, idx) => {
+      if (cur.includes(word)) acc.push(idx);
+      return acc;
+    }, []);
+
+    for (const idx of indexes) {
+      const start = idx - range * 1 >= 0 ? idx - range * 1 : 0;
+      const end = idx + range * 1 + 1;
+      const prevColumns = splitedSentence.slice(start, idx);
+      const nextColumns = splitedSentence.slice(idx + 1, end);
+
+      prevColumns.reverse();
+
+      for (let i = 0; i < prevColumns.length; i++) {
+        if (wordsInPrev[i + 1]) {
+          wordsInPrev[i + 1].push(prevColumns[i]);
+        } else {
+          wordsInPrev[i + 1] = [prevColumns[i]];
+        }
+      }
+
+      for (let i = 0; i < nextColumns.length; i++) {
+        if (wordsInNext[i + 1]) {
+          wordsInNext[i + 1].push(nextColumns[i]);
+        } else {
+          wordsInNext[i + 1] = [nextColumns[i]];
+        }
+      }
+    }
+  }
+
+  console.log(wordsInPrev);
 
   const onClickMinusBtn = (e) => {
     const id = e.currentTarget.id;
@@ -128,56 +164,9 @@ const Result = () => {
         >
           검색어 이전 등장 단어 목록
         </Typography>
+
         <Box my={1} mx="2rem">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>등장 빈도</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>4</TableCell>
-                <TableCell>5</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>2</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>3</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>4</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <TableForm range={range} data={wordsInPrev} />
         </Box>
 
         <Typography
@@ -192,55 +181,7 @@ const Result = () => {
         </Typography>
 
         <Box my={1} mx="2rem">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>등장 빈도</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell>4</TableCell>
-                <TableCell>5</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>2</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>3</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>4</TableCell>
-                <TableCell>werden</TableCell>
-                <TableCell>Heute</TableCell>
-                <TableCell>Tag</TableCell>
-                <TableCell>guten</TableCell>
-                <TableCell>Hallo</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <TableForm range={range} data={wordsInNext} />
         </Box>
       </AccordionDetails>
     </Accordion>

@@ -27,6 +27,7 @@ const TextInput = () => {
   const onPaste = (e) => {
     setText(e.clipboardData.getData("Text"));
     dispatch(update(text));
+    e.preventDefault();
   };
 
   return (

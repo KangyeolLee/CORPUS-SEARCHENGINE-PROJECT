@@ -4,17 +4,18 @@ export const searchResultSlice = createSlice({
   name: "searchResult",
   initialState: {
     searchWords: "",
-    aroundWords: {
-      value: "",
-    },
+    aroundWords: "",
   },
   reducers: {
     updateSearchWord: (state, action) => {
       state.searchWords = action.payload;
     },
+    updateAroundWord: (state, action) => {
+      state.aroundWords = action.payload;
+    },
   },
 });
 
-export const { updateSearchWord } = searchResultSlice.actions;
+export const { updateSearchWord, updateAroundWord } = searchResultSlice.actions;
 
 export default searchResultSlice.reducer;

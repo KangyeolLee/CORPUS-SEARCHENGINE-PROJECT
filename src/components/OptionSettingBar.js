@@ -9,13 +9,19 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { updateSearchWord } from "../features/searchResult/searchResultSlice";
+import {
+  updateSearchWord,
+  updateAroundWord,
+} from "../features/searchResult/searchResultSlice";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FindInPageOutlinedIcon from "@material-ui/icons/FindInPageOutlined";
 import React, { useState } from "react";
 
+const REGEX = /\S[A-Za-z-ÁÀȦÂÄǞǍĂĀÃÅǺǼǢĆĊĈČĎḌḐḒÉÈĖÊËĚĔĒẼE̊ẸǴĠĜǦĞG̃ĢĤḤáàȧâäǟǎăāãåǻǽǣćċĉčďḍḑḓéèėêëěĕēẽe̊ẹǵġĝǧğg̃ģĥḥÍÌİÎÏǏĬĪĨỊĴĶǨĹĻĽĿḼM̂M̄ʼNŃN̂ṄN̈ŇN̄ÑŅṊÓÒȮȰÔÖȪǑŎŌÕȬŐỌǾƠíìiîïǐĭīĩịĵķǩĺļľŀḽm̂m̄ŉńn̂ṅn̈ňn̄ñņṋóòôȯȱöȫǒŏōõȭőọǿơP̄ŔŘŖŚŜṠŠȘṢŤȚṬṰÚÙÛÜǓŬŪŨŰŮỤẂẀŴẄÝỲŶŸȲỸŹŻŽẒǮp̄ŕřŗśŝṡšşṣťțṭṱúùûüǔŭūũűůụẃẁŵẅýỳŷÿȳỹźżžẓǯßœŒçÇ]*/gi;
+
 const OptionSettingBar = () => {
   const [word, setWord] = useState("");
+  const [range, setRange] = useState(1);
   const text = useSelector((state) => state.textFile.value);
   const dispatch = useDispatch();
 
@@ -24,8 +30,16 @@ const OptionSettingBar = () => {
     setWord(e.target.value);
   };
 
+  const onChangeRange = (e) => {
+    e.preventDefault();
+    setRange(e.target.value);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+
+    const lowerText = text.toLowerCase();
+    const myWord = word.trim().toLowerCase();
     if (!text) {
       alert("검색할 파일 내용을 복붙하세욧!");
       return;
@@ -36,10 +50,14 @@ const OptionSettingBar = () => {
       return;
     }
 
-    const slicedText = text.toLowerCase().match(/\S\w*/gi);
-    const filtered = slicedText.filter((myText) =>
-      myText.includes(word.trim().toLowerCase())
+    const slicedText = lowerText.match(REGEX);
+    const sentences = lowerText.split(/[\n|.|?|!]/gi).filter(String);
+
+    const filteredSentence = sentences.filter((sentence) =>
+      sentence.includes(myWord)
     );
+
+    const filtered = slicedText.filter((myText) => myText.includes(myWord));
 
     const hashText = filtered.reduce((acc, cur) => {
       if (acc[cur]) {
@@ -49,7 +67,14 @@ const OptionSettingBar = () => {
       return acc;
     }, {});
 
-    dispatch(updateSearchWord(hashText));
+    const result = {
+      word,
+      text: hashText,
+      range: range,
+    };
+
+    dispatch(updateAroundWord(filteredSentence));
+    dispatch(updateSearchWord(result));
   };
 
   return (
@@ -87,7 +112,8 @@ const OptionSettingBar = () => {
                 variant="outlined"
                 label="검색 범위"
                 helperText="기본범위 1"
-                defaultValue="1"
+                onChange={onChangeRange}
+                value={range}
               />
             </Grid>
 
