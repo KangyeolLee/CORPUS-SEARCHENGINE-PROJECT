@@ -79,39 +79,46 @@ const Result = () => {
           검색 목록
         </Typography>
         {wordsArr.length ? (
-          wordsArr.map((word) => (
-            <Grid
-              container
-              spacing={5}
-              key={word}
-              style={{ alignItems: "center" }}
-            >
-              <IconButton
-                onClick={onClickMinusBtn}
-                id={word[0]}
-                style={{ marginLeft: "2rem" }}
-              >
-                <RemoveCircleOutlineIcon color="secondary" fontSize="large" />
-              </IconButton>
+          <Grid
+            container
+            spacing={5}
+            key={word}
+            style={{ alignItems: "center" }}
+          >
+            {wordsArr.map((word) => (
+              <Grid item xs={6}>
+                <Grid container spacing={2}>
+                  <IconButton
+                    onClick={onClickMinusBtn}
+                    id={word[0]}
+                    style={{ marginLeft: "2rem" }}
+                  >
+                    <RemoveCircleOutlineIcon
+                      color="secondary"
+                      fontSize="large"
+                    />
+                  </IconButton>
 
-              <Grid item>
-                <TextField
-                  value={word[0]}
-                  label="검색결과"
-                  variant="outlined"
-                  inputProps={{ readOnly: true }}
-                />
+                  <Grid item style={{ width: "40%" }}>
+                    <TextField
+                      value={word[0]}
+                      label="검색결과"
+                      variant="outlined"
+                      inputProps={{ readOnly: true }}
+                    />
+                  </Grid>
+                  <Grid item style={{ width: "40%" }}>
+                    <TextField
+                      value={word[1].sum}
+                      label="등장빈도"
+                      variant="outlined"
+                      inputProps={{ readOnly: true }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item>
-                <TextField
-                  value={word[1].sum}
-                  label="등장빈도"
-                  variant="outlined"
-                  inputProps={{ readOnly: true }}
-                />
-              </Grid>
-            </Grid>
-          ))
+            ))}
+          </Grid>
         ) : (
           <Alert style={{ margin: "0 2rem" }} severity="warning">
             <AlertTitle>
