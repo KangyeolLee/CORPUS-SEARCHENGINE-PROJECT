@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/corpus-search-engine-project/static/css/main.00246e49.chunk.css",
+    "main.js": "/corpus-search-engine-project/static/js/main.87011cc7.chunk.js",
+    "main.js.map": "/corpus-search-engine-project/static/js/main.87011cc7.chunk.js.map",
+    "runtime-main.js": "/corpus-search-engine-project/static/js/runtime-main.2eb67d6e.js",
+    "runtime-main.js.map": "/corpus-search-engine-project/static/js/runtime-main.2eb67d6e.js.map",
+    "static/js/2.963e763f.chunk.js": "/corpus-search-engine-project/static/js/2.963e763f.chunk.js",
+    "static/js/2.963e763f.chunk.js.map": "/corpus-search-engine-project/static/js/2.963e763f.chunk.js.map",
+    "index.html": "/corpus-search-engine-project/index.html",
+    "static/css/main.00246e49.chunk.css.map": "/corpus-search-engine-project/static/css/main.00246e49.chunk.css.map",
+    "static/js/2.963e763f.chunk.js.LICENSE.txt": "/corpus-search-engine-project/static/js/2.963e763f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2eb67d6e.js",
+    "static/js/2.963e763f.chunk.js",
+    "static/css/main.00246e49.chunk.css",
+    "static/js/main.87011cc7.chunk.js"
+  ]
+}
