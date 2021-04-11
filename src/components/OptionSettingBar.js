@@ -16,8 +16,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FindInPageOutlinedIcon from "@material-ui/icons/FindInPageOutlined";
 import React, { useState } from "react";
-
-const REGEX = /\S[A-Za-z-ÁÀȦÂÄǞǍĂĀÃÅǺǼǢĆĊĈČĎḌḐḒÉÈĖÊËĚĔĒẼE̊ẸǴĠĜǦĞG̃ĢĤḤáàȧâäǟǎăāãåǻǽǣćċĉčďḍḑḓéèėêëěĕēẽe̊ẹǵġĝǧğg̃ģĥḥÍÌİÎÏǏĬĪĨỊĴĶǨĹĻĽĿḼM̂M̄ʼNŃN̂ṄN̈ŇN̄ÑŅṊÓÒȮȰÔÖȪǑŎŌÕȬŐỌǾƠíìiîïǐĭīĩịĵķǩĺļľŀḽm̂m̄ŉńn̂ṅn̈ňn̄ñņṋóòôȯȱöȫǒŏōõȭőọǿơP̄ŔŘŖŚŜṠŠȘṢŤȚṬṰÚÙÛÜǓŬŪŨŰŮỤẂẀŴẄÝỲŶŸȲỸŹŻŽẒǮp̄ŕřŗśŝṡšşṣťțṭṱúùûüǔŭūũűůụẃẁŵẅýỳŷÿȳỹźżžẓǯßœŒçÇ]*/gi;
+import { filterOriginalText } from "../utils/functions";
 
 const OptionSettingBar = () => {
   const [word, setWord] = useState("");
@@ -38,8 +37,6 @@ const OptionSettingBar = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const lowerText = text.toLowerCase();
-    const myWord = word.trim().toLowerCase();
     if (!text) {
       alert("검색할 파일 내용을 복붙하세욧!");
       return;
@@ -50,28 +47,7 @@ const OptionSettingBar = () => {
       return;
     }
 
-    const slicedText = lowerText.match(REGEX);
-    const sentences = lowerText.split(/[\n|.|?|!]/gi).filter(String);
-
-    const filteredSentence = sentences.filter((sentence) =>
-      sentence.includes(myWord)
-    );
-
-    const filtered = slicedText.filter((myText) => myText.includes(myWord));
-
-    const hashText = filtered.reduce((acc, cur) => {
-      if (acc[cur]) {
-        acc[cur].sum++;
-      } else acc[cur] = { sum: 1 };
-
-      return acc;
-    }, {});
-
-    const result = {
-      word,
-      text: hashText,
-      range: range,
-    };
+    const [filteredSentence, result] = filterOriginalText(text, word, range);
 
     dispatch(updateAroundWord(filteredSentence));
     dispatch(updateSearchWord(result));

@@ -16,6 +16,7 @@ import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import React, { useEffect, useState } from "react";
 import TableForm from "./TableForm";
+import { filterTextForTableData } from "../utils/functions";
 
 const Result = () => {
   const sentences = useSelector((state) => state.searchResult.aroundWords);
@@ -36,41 +37,9 @@ const Result = () => {
 
   const wordsInPrev = {};
   const wordsInNext = {};
-
-  for (const sentence of sentences) {
-    const splitedSentence = sentence.split(" ").filter(String);
-    const indexes = splitedSentence.reduce((acc, cur, idx) => {
-      if (cur.includes(word)) acc.push(idx);
-      return acc;
-    }, []);
-
-    for (const idx of indexes) {
-      const start = idx - range * 1 >= 0 ? idx - range * 1 : 0;
-      const end = idx + range * 1 + 1;
-      const prevColumns = splitedSentence.slice(start, idx);
-      const nextColumns = splitedSentence.slice(idx + 1, end);
-
-      prevColumns.reverse();
-
-      for (let i = 0; i < prevColumns.length; i++) {
-        if (wordsInPrev[i + 1]) {
-          wordsInPrev[i + 1].push(prevColumns[i]);
-        } else {
-          wordsInPrev[i + 1] = [prevColumns[i]];
-        }
-      }
-
-      for (let i = 0; i < nextColumns.length; i++) {
-        if (wordsInNext[i + 1]) {
-          wordsInNext[i + 1].push(nextColumns[i]);
-        } else {
-          wordsInNext[i + 1] = [nextColumns[i]];
-        }
-      }
-    }
+  if (word) {
+    filterTextForTableData(word, range, sentences, wordsInPrev, wordsInNext);
   }
-
-  console.log(wordsInPrev);
 
   const onClickMinusBtn = (e) => {
     const id = e.currentTarget.id;
@@ -99,6 +68,16 @@ const Result = () => {
       </AccordionSummary>
 
       <AccordionDetails style={{ display: "block", marginTop: "2rem" }}>
+        <Typography
+          style={{
+            marginBottom: "3rem",
+            marginLeft: "2rem",
+            fontWeight: "bold",
+          }}
+          variant="h6"
+        >
+          검색 목록
+        </Typography>
         {wordsArr.length ? (
           wordsArr.map((word) => (
             <Grid
