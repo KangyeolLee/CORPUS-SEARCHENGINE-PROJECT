@@ -12,6 +12,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 간단한 텍스트 파일을 대상으로, 사용자가 원하는 옵션으로 텍스트 코퍼스를 검색할 수 있는 웹 사이트
 
+링크: https://kangyeollee.github.io/corpus-search-engine-project/
+
 ## Features
 
 - React CRA 환경으로 Frontend 구성
@@ -20,9 +22,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## 필수기능
 
-1. 검색하고자 하는 단어 입력 (전치사 + 명사의 전명구 단위도 입력 가능)
+1. 검색하고자 하는 단어 입력
+
+- 전치사 + 명사의 전명구 단위도 입력 가능
+- 검색어 포함 또는 완전일치 여부 on/open 가능
+
 2. 검색 단어 기준으로 입력된 범위 내에 존재하는 단어들 모두 검색
 3. 검색된 단어를 등장 빈도 수와 해당 단어가 등장한 범위를 테이블 형태로 출력
+
+- 등장빈도 1 항목 on/open 가능
 
 ## Update 내역
 
@@ -46,6 +54,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 2. 검색어 기준 앞(prev)과 후(next)에 주어진 범위 내에 등장하는 검색어를 모으고, 해당 단어들의 등장빈도를 재조사하는 기능 추가
 
 - 해당 결과는 테이블형태로 렌더링
+
+### 04.11 Update
+
+1. 현재까지 완료된 기능을 바탕으로 github-page 이용하여 온라인 배포 실시
+
+2. 각 컴포넌트 세분화 및 내부 로직 함수 모듈화
+
+3. 검색어 등장빈도 추출 정규식 변경 => 이제 단어 단위뿐아니라 [단어+구] ex. mit Hilfe 도 검색 가능
 
 ## Issues
 
