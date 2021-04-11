@@ -17,6 +17,7 @@ import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import React, { useEffect, useState } from "react";
 import TableForm from "./TableForm";
 import { filterTextForTableData } from "../utils/functions";
+import { v4 as uuid } from "uuid";
 
 const Result = () => {
   const sentences = useSelector((state) => state.searchResult.aroundWords);
@@ -79,19 +80,18 @@ const Result = () => {
           검색 목록
         </Typography>
         {wordsArr.length ? (
-          <Grid
-            container
-            spacing={5}
-            key={word}
-            style={{ alignItems: "center" }}
-          >
-            {wordsArr.map((word) => (
-              <Grid item xs={6}>
+          <Grid container spacing={5} style={{ alignItems: "center" }}>
+            {wordsArr.map((word, idx) => (
+              <Grid key={uuid()} item xs={6}>
                 <Grid container spacing={2}>
                   <IconButton
                     onClick={onClickMinusBtn}
                     id={word[0]}
-                    style={{ marginLeft: "2rem" }}
+                    style={
+                      idx % 2 === 0
+                        ? { marginLeft: "2rem" }
+                        : { marginLeft: "0" }
+                    }
                   >
                     <RemoveCircleOutlineIcon
                       color="secondary"
@@ -99,15 +99,16 @@ const Result = () => {
                     />
                   </IconButton>
 
-                  <Grid item style={{ width: "40%" }}>
+                  <Grid item style={{ width: "60%" }}>
                     <TextField
                       value={word[0]}
                       label="검색결과"
                       variant="outlined"
+                      fullWidth
                       inputProps={{ readOnly: true }}
                     />
                   </Grid>
-                  <Grid item style={{ width: "40%" }}>
+                  <Grid item style={{ width: "20%" }}>
                     <TextField
                       value={word[1].sum}
                       label="등장빈도"
