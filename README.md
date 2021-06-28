@@ -1,7 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Corpus Search Engine Project
 
 코퍼스(Corpus)란?
@@ -12,13 +8,26 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 간단한 텍스트 파일을 대상으로, 사용자가 원하는 옵션으로 텍스트 코퍼스를 검색할 수 있는 웹 사이트
 
-링크: https://kangyeollee.github.io/corpus-search-engine-project/
+## Demo Page
+
+- Github pages를 이용한 배포 (정적 배포)
+- 링크 : https://kangyeollee.github.io/CORPUS-SEARCHENGINE-PROJECT/
 
 ## Features
 
 - React CRA 환경으로 Frontend 구성
+
+  - SSR과 같은 기능을 이용하지 않고 빠른 개발 진행을 위해 CLI를 통해 개발환경 구축
+
 - Redux Toolkit으로 전역 상태 관리
+
+  - Redux를 보다 정립된 형태로 사용하기 위해 선택
+  - 학습 및 경험 목적
+
 - Material UI 사용
+  - UI 디자인에 많은 시간을 들이지 않고 이미 만들어진 라이브러리를 통해 빠른 구축 추구
+  - Material UI 라이브러리의 인기가 많고 많이 사용하기에 관련 생태계 구축이 잘 되었을 거라고 판단
+  - 예전 `materializecss` 를 사용한 경험이 있기 때문에 라이브러리 형태로 만들어진 Material Design 컨셉에 익숙
 
 ## 필수기능
 
